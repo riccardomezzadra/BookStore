@@ -15,14 +15,4 @@ public class Book {
     private Double price;
     private Author author;
 
-    @Override
-    public String toString() {
-        return "Book{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", genre='" + genre + '\'' +
-                ", price=" + price +
-                ", author=" + author +
-                '}';
-    }
 }

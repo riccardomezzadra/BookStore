@@ -17,22 +17,8 @@ public class Author {
     private String photoURL;
     private String nationality;
     private String birthPlace;
-    private Date DateOfBirth;
-    private Date DateOfDeath;
+    private Date dateOfBirth;
+    private Date dateOfDeath;
     private String gender;
 
-    @Override
-    public String toString() {
-        return "Author{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", surname='" + surname + '\'' +
-                ", photoURL='" + photoURL + '\'' +
-                ", nationality='" + nationality + '\'' +
-                ", birthPlace='" + birthPlace + '\'' +
-                ", DateOfBirth=" + DateOfBirth +
-                ", DateOfDeath=" + DateOfDeath +
-                ", gender='" + gender + '\'' +
-                '}';
-    }
 }

@@ -14,22 +14,7 @@ public class SalesBookLibrary {
     private Book book;
     private Integer bookQuantity;
 
-    @Override
-    public String toString() {
-        return "SalesBookLibrary{" +
-                "id=" + id +
-                ", bookStore=" + bookStore +
-                ", book=" + book +
-                ", bookQuantity=" + bookQuantity +
-                '}';
-    }
+
 }
 
-
-//MyFirstCommit !
-
-
-//New updates here  after git stash !!
-
-//Test on Stash 
 

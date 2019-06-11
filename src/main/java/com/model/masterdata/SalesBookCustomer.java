@@ -16,15 +16,4 @@ public class SalesBookCustomer {
     private Customer customer;
     private Book book;
 
-    @Override
-    public String toString() {
-        return "SalesBookCustomer{" +
-                "id=" + id +
-                ", quantity=" + quantity +
-                ", totalAmount=" + totalAmount +
-                ", unitPrice=" + unitPrice +
-                ", customer=" + customer +
-                ", book=" + book +
-                '}';
-    }
 }

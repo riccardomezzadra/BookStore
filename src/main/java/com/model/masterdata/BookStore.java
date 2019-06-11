@@ -13,12 +13,4 @@ public class BookStore {
     private String name;
     private String address;
 
-    @Override
-    public String toString() {
-        return "BookStore{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", address='" + address + '\'' +
-                '}';
-    }
 }
