@@ -1,3 +1,5 @@
+// dataSource created on config.xml of iBatis
+/*
 package com.configuration;
 
 import org.springframework.boot.jdbc.DataSourceBuilder;
@@ -21,3 +23,4 @@ public class DataSourceConfig {
     }
 
 }
+*/
