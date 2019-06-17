@@ -4,13 +4,20 @@ import com.contract.IRequest;
 import com.contract.data.IBaseDAO;
 import com.model.masterdata.Author;
 import com.model.masterdata.Book;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
+
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 public class BookDAO implements IBaseDAO<Book, IRequest> {
 
+    private final static Logger log = Logger.getLogger(BookDAO.class.getName());
+    SqlSessionFactory sqlSessionFactory = ConnectionFactory.getSqlSessionFactory();
 
+/*
     public List<Book> getAll(IRequest req) {
 
         //Create list's book
@@ -71,6 +78,26 @@ public class BookDAO implements IBaseDAO<Book, IRequest> {
         return listBook;
 
     }
+*/
+
+    public List<Book> getAll(IRequest req) {
+
+        SqlSession session = sqlSessionFactory.openSession();
+        List list = new ArrayList<>();
+
+        try {
+            list = session.selectList("Book.selectAll");
+        } catch (Exception ex) {
+            throw ex;
+        } finally {
+            session.close();
+        }
+        log.info("Books got from db: " + list.size());
+
+        return list;
+
+    }
+
 
     public Book getElement(IRequest req) {
         return null;

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Book">
+    <resultMap id="BookMap" type="Book">
+        <id column="id" property="id"/>
+        <result column="title" property="title"/>
+        <result column="genre" property="genre"/>
+        <result column="price" property="price"/>
+        <association property="author" javaType="Author">
+            <id column="author_id" property="id"/>
+            <result column="author_name" property="name"/>
+            <result column="author_surname" property="surname"/>
+            <result column="author_photo_url" property="photoURL"/>
+            <result column="author_nationality" property="nationality"/>
+            <result column="author_birth_place" property="birthPlace"/>
+            <result column="author_date_of_birth" property="dateOfBirth"/>
+            <result column="author_date_of_death" property="dateOfDeath"/>
+            <result column="author_gender" property="gender"/>
+        </association>
+    </resultMap>
+
+    <select id="selectAll" resultMap="BookMap">
+        SELECT b.id as id,
+        title,
+        genre,
+        price,
+
+        a.id as author_id,
+        a.name as author_name,
+        a.surname as author_surname,
+        a.photo_url as author_photo_url,
+        a.nationality as author_nationality,
+        a.birth_place as author_birth_place,
+        a.date_of_birth as author_date_of_birth,
+        a.date_of_death as author_date_of_death,
+        a.gender as author_gender
+
+        FROM book b
+
+        inner join author a on a.id = b.author_id;
+    </select>
+</mapper>
+
