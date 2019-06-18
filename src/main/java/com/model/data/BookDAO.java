@@ -100,7 +100,20 @@ public class BookDAO implements IBaseDAO<Book, IRequest> {
 
 
     public Book getElement(IRequest req) {
-        return null;
+
+        SqlSession session = sqlSessionFactory.openSession();
+        Book book = null;
+
+        try {
+            book = session.selectOne("Book.selectById", req instanceof DataIdRequest ? ((DataIdRequest) req).getId() : null);
+        } catch (Exception ex) {
+            throw ex;
+        } finally {
+            session.close();
+        }
+        //log.info(book.getTitle());
+
+        return book;
     }
 
 
