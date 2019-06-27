@@ -1,10 +1,10 @@
 package com.controller;
 
-import com.model.data.BookDAO;
-import com.model.data.DataIdRequest;
+import com.contract.data.IBookService;
 import com.model.masterdata.Book;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -14,14 +14,16 @@ import java.util.List;
 public class BookController {
 
     private final static Logger log = LoggerFactory.getLogger(BookController.class.getName());
-    BookDAO bookDAO = new BookDAO();
+
+    @Autowired
+    IBookService bookService;
 
     @CrossOrigin(origins = "*")
     @RequestMapping(value = "/books", method = RequestMethod.GET)
     public List<Book> getBookList() {
 
         try {
-            List<Book> bookList = bookDAO.getAll(null);
+            List<Book> bookList = bookService.getAll();
             return bookList;
         } catch (Exception ex) {
             log.error(ex.getMessage());
@@ -35,15 +37,12 @@ public class BookController {
     public Book getBook(@PathVariable("id") Long id) {
 
         try {
-            DataIdRequest req = new DataIdRequest();
-            req.setId(id);
-            Book book = bookDAO.getElement(req);
+            Book book = bookService.getById(id);
             return book;
         } catch (Exception ex) {
             log.error(ex.getMessage());
         }
         return new Book();
-
     }
 
 }
