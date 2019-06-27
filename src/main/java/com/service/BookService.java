@@ -39,4 +39,28 @@ public class BookService implements IBookService {
         }
         return new Book();
     }
+
+
+    public Book setBook(Book book) {
+
+        try {
+            bookDAO.setElement(book);
+            log.info(book.getTitle());
+        } catch (Exception ex) {
+            log.error(ex.getMessage());
+        }
+        return book;
+    }
+
+    public boolean delete(Long id) {
+
+        try {
+            bookDAO.deleteElement(id);
+        } catch (Exception ex) {
+            log.error("error: " + ex.toString());
+            return false;
+        }
+        return true;
+    }
+
 }

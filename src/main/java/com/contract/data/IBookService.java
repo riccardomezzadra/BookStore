@@ -10,10 +10,8 @@ public interface IBookService {
 
     Book getById(Long id);
 
-    //Book insert(Book book);
+    Book setBook(Book book);
 
-    //Book update(Book book);
-
-    //void delete(Long id);
+    boolean delete(Long id);
 
 }

@@ -111,11 +111,45 @@ public class BookDAO implements IBaseDAO<Book, IRequest> {
         } finally {
             session.close();
         }
-        //log.info(book.getTitle());
+
+        log.info(book.getTitle());
+        return book;
+    }
+
+    public Book setElement(Book book) {
+        SqlSession session = sqlSessionFactory.openSession();
+
+        try {
+
+            if (book.getId() == null) {
+                session.insert("Book.insert", book);
+            } else
+                session.update("Book.update", book);
+
+        } catch (Exception ex) {
+            throw ex;
+        } finally {
+            session.commit();
+            session.close();
+        }
 
         return book;
     }
 
+    public void deleteElement(Long id) {
+        SqlSession session = sqlSessionFactory.openSession();
+        DataIdRequest req = new DataIdRequest();
+        req.setId(id);
+        try {
+            session.delete("Book.delete", req);
+            log.info("Removed book n. " + String.valueOf(id.longValue()) + " from Book");
+        } catch (Exception ex) {
+            throw ex;
+        } finally {
+            session.commit();
+            session.close();
+        }
+    }
 
     //For Date format !
     /*

@@ -57,5 +57,28 @@
 
         WHERE b.id = #{id};
     </select>
+
+    <insert id="insert" parameterType="Book" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        INSERT INTO book
+        ( title , genre, price, author_id )
+        VALUES (#{title}, #{genre}, #{price}, #{author.id})
+        <selectKey keyProperty="id" resultType="Long" order="AFTER">
+            SELECT currval('book_id_seq');
+        </selectKey>
+    </insert>
+
+    <update id="update" parameterType="Book">
+        UPDATE book
+        SET
+        title = #{title},
+        genre = #{genre},
+        price = #{price},
+        author_id = #{author.id}
+        WHERE id = #{id};
+    </update>
+
+    <delete id="delete" parameterType="Long">
+        DELETE from book WHERE id = #{id};
+    </delete>
 </mapper>
 
