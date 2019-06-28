@@ -4,7 +4,8 @@ import com.contract.data.IBookService;
 import com.model.data.BookDAO;
 import com.model.data.DataIdRequest;
 import com.model.masterdata.Book;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -13,13 +14,16 @@ import java.util.List;
 @Service
 public class BookService implements IBookService {
 
-    private final static Logger log = Logger.getLogger(BookService.class.getName());
+    private final static Logger log = LogManager.getLogger(BookService.class);
     private BookDAO bookDAO = new BookDAO();
 
     public List<Book> getAll() {
 
         try {
             List<Book> bookList = bookDAO.getAll(null);
+            log.debug("DEBUG!!!!!!");
+            log.info("INFO!!!!!!!!");
+            log.fatal("FATAL!!!!");
             return bookList;
         } catch (Exception ex) {
             log.error(ex.getMessage());
