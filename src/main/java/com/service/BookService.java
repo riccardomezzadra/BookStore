@@ -17,13 +17,10 @@ public class BookService implements IBookService {
     private final static Logger log = LogManager.getLogger(BookService.class);
     private BookDAO bookDAO = new BookDAO();
 
-    public List<Book> getAll() {
+    public List<Book> findAll() {
 
         try {
             List<Book> bookList = bookDAO.getAll(null);
-            log.debug("DEBUG!!!!!!");
-            log.info("INFO!!!!!!!!");
-            log.fatal("FATAL!!!!");
             return bookList;
         } catch (Exception ex) {
             log.error(ex.getMessage());
@@ -32,7 +29,7 @@ public class BookService implements IBookService {
 
     }
 
-    public Book getById(Long id) {
+    public Book findById(Long id) {
         try {
             DataIdRequest req = new DataIdRequest();
             req.setId(id);

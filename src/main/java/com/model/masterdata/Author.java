@@ -21,4 +21,8 @@ public class Author {
     private Date dateOfDeath;
     private String gender;
 
+    public Author(Long id , String name) {
+        this.id = id;
+        this.name = name;
+    }
 }

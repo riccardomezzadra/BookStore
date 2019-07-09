@@ -15,4 +15,25 @@ public class Book {
     private Double price;
     private Author author;
 
+    public Book(String title, String genre, Double price, Author author) {
+        this.title = title;
+        this.genre = genre;
+        this.price = price;
+        this.author = author;
+    }
+
+    public Book(Long id, String title, Double price, Author author) {
+        this.id = id;
+        this.title = title;
+        this.price = price;
+        this.author = author;
+    }
+
+    public Book(Long id, String title, String genre, Double price, Author author) {
+        this.id = id;
+        this.title = title;
+        this.genre = genre;
+        this.price = price;
+        this.author = author;
+    }
 }

@@ -2,23 +2,23 @@ package com.model.data;
 
 import com.contract.IRequest;
 import com.contract.data.IBaseDAO;
-import com.model.masterdata.Author;
 import com.model.masterdata.Book;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
-
+import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
+@Repository
 public class BookDAO implements IBaseDAO<Book, IRequest> {
 
     private final static Logger log = Logger.getLogger(BookDAO.class.getName());
     SqlSessionFactory sqlSessionFactory = ConnectionFactory.getSqlSessionFactory();
 
 /*
-    public List<Book> getAll(IRequest req) {
+    public List<Book> findAll(IRequest req) {
 
         //Create list's book
         List<Book> listBook = new ArrayList<Book>();

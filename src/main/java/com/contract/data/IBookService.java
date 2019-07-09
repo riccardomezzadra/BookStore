@@ -6,9 +6,9 @@ import java.util.List;
 
 public interface IBookService {
 
-    List<Book> getAll();
+    List<Book> findAll();
 
-    Book getById(Long id);
+    Book findById(Long id);
 
     Book setBook(Book book);
 

@@ -2,19 +2,23 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>2.1.4.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
+
     <groupId>com.bookstore</groupId>
     <artifactId>Bookstore</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>Bookstore</name>
-    <description>Demo project for Spring Boot</description>
+    <description>Backend Bookstore Application</description>
 
     <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
     </properties>
 
@@ -40,6 +44,14 @@
             <version>3.4.6</version>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/org.mybatis/mybatis-spring -->
+        <!-- This resolves error : *** java.lang.instrument ASSERTION FAILED ***: "!errorOutstanding" ..... line 844  -->
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis-spring</artifactId>
+            <version>2.0.1</version>
+        </dependency>
+
         <dependency>
             <groupId>postgresql</groupId>
             <artifactId>postgresql</artifactId>
@@ -50,12 +62,6 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <scope>provided</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
         </dependency>
 
         <!-- Exclude Spring Boot's Default Logging -->
@@ -69,20 +75,89 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        
+
         <!-- Add Log4j2 Dependency -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-log4j2</artifactId>
         </dependency>
-    </dependencies>
 
+        <!-- Test Dependencies -->
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+
+       <dependency>
+           <groupId>org.junit.jupiter</groupId>
+           <artifactId>junit-jupiter-api</artifactId>
+           <version>5.2.0</version>
+           <scope>test</scope>
+       </dependency>
+       <dependency>
+           <groupId>org.junit.jupiter</groupId>
+           <artifactId>junit-jupiter-engine</artifactId>
+           <version>5.2.0</version>
+           <scope>test</scope>
+       </dependency>
+       <dependency>
+           <groupId>org.junit.jupiter</groupId>
+           <artifactId>junit-jupiter-params</artifactId>
+           <version>5.2.0</version>
+           <scope>test</scope>
+       </dependency>
+
+        <!-- una di queste dipendenze crea problemi di avvio app
+              <dependency>
+                  <groupId>org.dbunit</groupId>
+                  <artifactId>dbunit</artifactId>
+                  <version>2.5.4</version>
+              </dependency>
+              <dependency>
+                  <groupId>com.github.database-rider</groupId>
+                  <artifactId>rider-core</artifactId>
+                  <version>1.2.10</version>
+              </dependency>
+              <dependency>
+                  <groupId>com.github.database-rider</groupId>
+                  <artifactId>rider-junit5</artifactId>
+                  <version>1.2.10</version>
+              </dependency>
+              <dependency>
+                  <groupId>com.github.springtestdbunit</groupId>
+                  <artifactId>spring-test-dbunit</artifactId>
+                  <version>1.3.0</version>
+                  <scope>test</scope>
+              </dependency>
+
+               <dependency>
+                  <groupId>org.springframework.boot</groupId>
+                  <artifactId>spring-boot-starter-jdbc</artifactId>
+              </dependency>
+
+       -->
+    </dependencies>
 
     <build>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.21.0</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.junit.platform</groupId>
+                        <artifactId>junit-platform-surefire-provider</artifactId>
+                        <version>1.2.0</version>
+                    </dependency>
+                </dependencies>
             </plugin>
         </plugins>
     </build>
