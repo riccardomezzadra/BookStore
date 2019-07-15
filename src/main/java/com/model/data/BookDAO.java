@@ -1,5 +1,6 @@
 package com.model.data;
 
+import com.contract.AbstractDAO;
 import com.contract.IRequest;
 import com.contract.data.IBaseDAO;
 import com.model.masterdata.Book;
@@ -12,7 +13,7 @@ import java.util.List;
 import java.util.logging.Logger;
 
 @Repository
-public class BookDAO implements IBaseDAO<Book, IRequest> {
+public class BookDAO extends AbstractDAO implements IBaseDAO<Book, IRequest> {
 
     private final static Logger log = Logger.getLogger(BookDAO.class.getName());
     SqlSessionFactory sqlSessionFactory = ConnectionFactory.getSqlSessionFactory();
@@ -80,6 +81,7 @@ public class BookDAO implements IBaseDAO<Book, IRequest> {
     }
 */
 
+    @Override
     public List<Book> getAll(IRequest req) {
 
         SqlSession session = sqlSessionFactory.openSession();
@@ -98,7 +100,7 @@ public class BookDAO implements IBaseDAO<Book, IRequest> {
 
     }
 
-
+    @Override
     public Book getElement(IRequest req) {
 
         SqlSession session = sqlSessionFactory.openSession();
@@ -150,6 +152,7 @@ public class BookDAO implements IBaseDAO<Book, IRequest> {
             session.close();
         }
     }
+
 
     //For Date format !
     /*

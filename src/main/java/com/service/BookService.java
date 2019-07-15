@@ -1,6 +1,6 @@
 package com.service;
 
-import com.contract.data.IBookService;
+import com.contract.IBookService;
 import com.model.data.BookDAO;
 import com.model.data.DataIdRequest;
 import com.model.masterdata.Book;

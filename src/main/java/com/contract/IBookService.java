@@ -1,4 +1,4 @@
-package com.contract.data;
+package com.contract;
 
 import com.model.masterdata.Book;
 

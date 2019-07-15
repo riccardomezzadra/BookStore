@@ -1,6 +1,6 @@
 package com.controller;
 
-import com.contract.data.IBookService;
+import com.contract.IBookService;
 import com.model.data.BookDAO;
 import com.model.masterdata.Book;
 import org.slf4j.Logger;
