@@ -15,8 +15,9 @@
     <typeAliases>
         <typeAlias alias="Book" type="com.model.masterdata.Book"/>
         <typeAlias alias="Author" type="com.model.masterdata.Author"/>
+        <typeAlias alias="Account" type="com.model.Authentication.Account"/>
+        <typeAlias alias="AuthToken" type="com.model.Authentication.AuthToken"/>
     </typeAliases>
-
     <typeHandlers>
         <typeHandler handler="org.apache.ibatis.type.BooleanTypeHandler"/>
     </typeHandlers>
@@ -37,6 +38,8 @@
     <mappers>
         <mapper resource="mapper/Book.xml"/>
         <mapper resource="mapper/Author.xml"/>
+        <mapper resource="mapper/AuthToken.xml"/>
+        <mapper resource="mapper/Account.xml"/>
     </mappers>
 
 </configuration>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Account">
+
+    <resultMap id="AccountMap" type="Account">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="surname" property="surname"/>
+        <result column="username" property="username"/>
+        <result column="password" property="password"/>
+        <result column="email" property="email"/>
+        <result column="creation_date" property="creationDate"/>
+    </resultMap>
+
+    <select id="selectAll" resultMap="AccountMap">
+        select id, name, surname, username, password, email, creation_date
+        from account;
+    </select>
+
+    <select id="selectById" resultMap="AccountMap">
+        select id, name, surname, username, password, email, creation_date
+        from account
+        where id = #{id};
+    </select>
+
+    <select id="selectByName" resultMap="AccountMap">
+        select id, name, surname, username, password, email, creation_date
+        from account
+        where username = #{id};
+    </select>
+
+
+    <insert id="insert" parameterType="Account" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        INSERT INTO
+        account (name, surname, username, password, email)
+        VALUES
+        (#{name}, #{surname}, #{username}, #{password}, #{email})
+        <selectKey keyProperty="id" resultType="Long" order="AFTER">
+            SELECT currval('account_id_seq');
+        </selectKey>
+    </insert>
+
+    <update id="update" parameterType="Account">
+        UPDATE
+        account
+        SET
+        name = #{name},
+        surname = #{surname},
+        username = #{username},
+        password = #{password},
+        email = #{email}
+        WHERE id=#{id};
+    </update>
+
+
+</mapper>
