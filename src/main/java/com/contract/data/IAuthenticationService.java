@@ -14,6 +14,8 @@ public interface IAuthenticationService {
 
     //boolean delete(Long id);
 
+    Account signup(Account account);
+
     boolean checkToken(String token);
 
 }

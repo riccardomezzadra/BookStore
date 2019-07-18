@@ -7,6 +7,7 @@ import com.model.data.AuthTokenDAO;
 import com.model.data.DataIdRequest;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -49,5 +50,26 @@ public class AuthenticationService implements IAuthenticationService {
         return new Account();
     }
 
+
+    public Account signup(Account account) {
+        try {
+
+            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+            account.setPassword(passwordEncoder.encode(account.getPassword()));
+
+            accountDAO.setElement(account);
+            sanitiseAccount(account);
+
+        } catch (Exception ex) {
+            throw ex;
+        }
+
+        return account;
+    }
+
+
+    private void sanitiseAccount(Account account) {
+        account.setPassword("*******");
+    }
 
 }

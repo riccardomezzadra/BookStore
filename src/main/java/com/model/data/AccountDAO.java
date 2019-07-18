@@ -52,4 +52,26 @@ public class AccountDAO extends AbstractDAO implements IBaseDAO<Account, IReques
         return account;
     }
 
+    public Account setElement(Account account) {
+
+        SqlSession session = sqlSessionFactory.openSession();
+
+        try {
+            if (account.getId() == null || account.getId() <= 0)
+                session.insert("Account.insert", account);
+            //else , create update method
+
+        } catch (Exception ex) {
+            throw ex;
+        } finally {
+            session.commit();
+            session.close();
+        }
+
+        log.info(account.getUsername());
+        return account;
+
+    }
+
+
 }

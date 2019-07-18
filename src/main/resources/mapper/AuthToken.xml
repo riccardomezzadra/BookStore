@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="AuthToken">
+
+    <resultMap id="AuthTokenMap" type="AuthToken">
+        <id column="id" property="id"/>
+        <result column="token" property="token"/>
+        <result column="creation_date" property="creationDate"/>
+        <result column="expiry_date" property="expiryDate"/>
+        <!-- to change customer to account!!!!
+        <association property="customer" javaType="Customer">
+            <id column="customer_id" property="id"/>
+            <result column="customer_name" property="name"/>
+            <result column="customer_surname" property="surname"/>
+            <result column="customer_username" property="username"/>
+            <result column="customer_email" property="email"/>
+        </association>
+        -->
+    </resultMap>
+
+    <select id="selectById" resultMap="AuthTokenMap">
+        SELECT
+        tok.id, token, creation_date, expiry_date
+        FROM
+        auth_token tok
+        WHERE
+        tok.id = #{id};
+    </select>
+
+    <select id="selectByToken" resultMap="AuthTokenMap">
+        SELECT
+        tok.id as id,
+        tok.token as token,
+        tok.creation_date as creation_date,
+        tok.expiry_date as expiry_date
+
+        FROM
+        auth_token tok
+
+        WHERE
+        token = #{token};
+    </select>
+
+<!--
+    <insert id="insert" parameterType="AuthToken" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        INSERT INTO
+        auth_token (token, customer_id)
+        VALUES
+        (#{token}, #{customer.id})
+        <selectKey keyProperty="id" resultType="Long" order="AFTER">
+            SELECT currval('auth_token_id_seq');
+        </selectKey>
+    </insert>
+-->
+<!--
+    <update id="delete" parameterType="AuthToken">
+        DELETE
+        auth_token
+        WHERE id=#{id};
+    </update>
+-->
+</mapper>

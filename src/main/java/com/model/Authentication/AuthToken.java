@@ -1,5 +1,6 @@
 package com.model.Authentication;
 
+import com.contract.IBaseModel;
 import com.model.masterdata.Customer;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,7 +11,7 @@ import java.util.Date;
 @Getter
 @Setter
 @NoArgsConstructor
-public class AuthToken {
+public class AuthToken implements IBaseModel {
 
     private Long id;
     private String token;

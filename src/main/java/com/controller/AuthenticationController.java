@@ -2,6 +2,7 @@ package com.controller;
 
 import com.contract.data.IAuthenticationService;
 import com.model.Authentication.Account;
+import com.model.exceptions.HTTPResponseException;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -55,5 +56,19 @@ public class AuthenticationController {
         }
 
     }
+
+
+    @CrossOrigin(origins = "*")
+    @RequestMapping(value = "/signup", method = RequestMethod.POST)
+    public Account signup(@RequestBody Account account) throws HTTPResponseException {
+        try {
+            authenticationService.signup(account);
+        } catch (Exception ex) {
+            log.error("Signup Failed: " + ex.getMessage());
+            throw new HTTPResponseException("Account already exists!", HttpStatus.LOCKED);
+        }
+        return account;
+    }
+
 
 }
