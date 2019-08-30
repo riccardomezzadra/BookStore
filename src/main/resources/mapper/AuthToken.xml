@@ -37,11 +37,10 @@
         tok.token as token,
         tok.creation_date as creation_date,
         tok.expiry_date as expiry_date,
-        a.id as account_id,
-        a.username as account_username
+        a.id as account_id
 
         FROM
-        auth_token tok , account
+        auth_token tok , account a
 
         WHERE
         token = #{token};

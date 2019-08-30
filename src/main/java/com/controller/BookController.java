@@ -39,7 +39,9 @@ public class BookController {
 
     @CrossOrigin(origins = "*")
     @RequestMapping(value = "/books/{id}", method = RequestMethod.GET)
-    public ResponseEntity<Book> getBook(@PathVariable("id") Long id) {
+    public ResponseEntity<Book> getBook(@RequestHeader("Authorization") String token, @PathVariable("id") Long id) {
+
+        log.info("Token received: " + token);
 
         try {
             Book book = bookService.findById(id);

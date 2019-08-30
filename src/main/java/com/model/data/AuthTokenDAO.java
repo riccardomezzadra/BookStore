@@ -39,4 +39,19 @@ public class AuthTokenDAO extends AbstractDAO<AuthToken> implements IBaseDAO<Aut
         return null;
     }
 
+    public AuthToken verifyToken(IRequest req) {
+        SqlSession session = sqlSessionFactory.openSession();
+        AuthToken result;
+
+        try {
+            result = session.selectOne("AuthToken.selectByToken", req instanceof DataValueRequest ? ((DataValueRequest) req).getId() : null);
+        } catch (Exception ex) {
+            throw ex;
+        } finally {
+            session.close();
+        }
+
+        return result;
+    }
+
 }

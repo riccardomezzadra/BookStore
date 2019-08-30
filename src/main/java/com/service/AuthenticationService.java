@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -27,7 +28,25 @@ public class AuthenticationService implements IAuthenticationService {
     AuthTokenDAO authTokenDAO = new AuthTokenDAO();
 
     public boolean checkToken(String token) {
-        return true;
+
+        log.info("Token received: " + token);
+
+        try {
+            AuthToken authToken = null;
+            DataValueRequest req = new DataValueRequest();
+            req.setId(token);
+            authToken = authTokenDAO.verifyToken(req);
+
+            if ((authToken != null) && (authToken.getExpiryDate().isAfter(LocalDateTime.now()))) {
+                return true;
+            } else {
+                // TODO: add exception
+                throw new HTTPResponseException("Bad credentials", HttpStatus.UNAUTHORIZED);
+            }
+        } catch (Exception ex) {
+            log.error(ex.getMessage());
+        }
+        return false;
     }
 
     public List<Account> findAll() {
