@@ -41,7 +41,10 @@ public class AccountDAO extends AbstractDAO implements IBaseDAO<Account, IReques
         Account account = null;
 
         try {
-            account = session.selectOne("Account.selectById", req instanceof DataIdRequest ? ((DataIdRequest) req).getId() : null);
+            if (req instanceof DataIdRequest)
+                account = session.selectOne("Account.selectById", ((DataIdRequest) req).getId());
+            else if (req instanceof DataValueRequest)
+                account = session.selectOne("Account.selectByName", ((DataValueRequest) req).getFieldName());
         } catch (Exception ex) {
             throw ex;
         } finally {

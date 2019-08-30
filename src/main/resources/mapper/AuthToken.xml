@@ -10,22 +10,23 @@
         <result column="token" property="token"/>
         <result column="creation_date" property="creationDate"/>
         <result column="expiry_date" property="expiryDate"/>
-        <!-- to change customer to account!!!!
-        <association property="customer" javaType="Customer">
-            <id column="customer_id" property="id"/>
-            <result column="customer_name" property="name"/>
-            <result column="customer_surname" property="surname"/>
-            <result column="customer_username" property="username"/>
-            <result column="customer_email" property="email"/>
+        <association property="account" javaType="Account">
+            <id column="account_id" property="id"/>
+            <result column="account_name" property="name"/>
+            <result column="account_surname" property="surname"/>
+            <result column="account_username" property="username"/>
+            <result column="account_email" property="email"/>
         </association>
-        -->
     </resultMap>
+
 
     <select id="selectById" resultMap="AuthTokenMap">
         SELECT
-        tok.id, token, creation_date, expiry_date
+        tok.id, token, creation_date, expiry_date ,
+        a.id , a.name as account_name , a.surname as account_surname , a.email as account_email
         FROM
         auth_token tok
+        INNER JOIN account a on a.id = tokid
         WHERE
         tok.id = #{id};
     </select>
@@ -35,31 +36,32 @@
         tok.id as id,
         tok.token as token,
         tok.creation_date as creation_date,
-        tok.expiry_date as expiry_date
+        tok.expiry_date as expiry_date,
+        a.id as account_id,
+        a.username as account_username
 
         FROM
-        auth_token tok
+        auth_token tok , account
 
         WHERE
         token = #{token};
     </select>
 
-<!--
     <insert id="insert" parameterType="AuthToken" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
         INSERT INTO
-        auth_token (token, customer_id)
+        auth_token (token, account_id)
         VALUES
-        (#{token}, #{customer.id})
+        (#{token}, #{account.id})
         <selectKey keyProperty="id" resultType="Long" order="AFTER">
             SELECT currval('auth_token_id_seq');
         </selectKey>
     </insert>
--->
-<!--
-    <update id="delete" parameterType="AuthToken">
-        DELETE
-        auth_token
-        WHERE id=#{id};
-    </update>
--->
+
+    <!--
+        <update id="delete" parameterType="AuthToken">
+            DELETE
+            auth_token
+            WHERE id=#{id};
+        </update>
+    -->
 </mapper>

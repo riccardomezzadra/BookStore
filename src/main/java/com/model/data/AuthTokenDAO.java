@@ -4,6 +4,7 @@ import com.contract.AbstractDAO;
 import com.contract.IRequest;
 import com.contract.data.IBaseDAO;
 import com.model.Authentication.AuthToken;
+import org.apache.ibatis.session.SqlSession;
 
 import java.util.List;
 
@@ -24,8 +25,17 @@ public class AuthTokenDAO extends AbstractDAO<AuthToken> implements IBaseDAO<Aut
 
     }
 
-    //Sistemare prima query insert
+
     public AuthToken setElement(AuthToken token) {
+        SqlSession session = sqlSessionFactory.openSession();
+        try {
+            session.insert("AuthToken.insert", token);
+        } catch (Exception ex) {
+            throw ex;
+        } finally {
+            session.commit();
+            session.close();
+        }
         return null;
     }
 
