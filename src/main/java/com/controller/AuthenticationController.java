@@ -2,6 +2,7 @@ package com.controller;
 
 import com.contract.data.IAuthenticationService;
 import com.model.Authentication.Account;
+import com.model.Authentication.AuthToken;
 import com.model.exceptions.HTTPResponseException;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,23 @@ public class AuthenticationController {
 
     @Autowired
     IAuthenticationService authenticationService;
+
+
+    @CrossOrigin(origins = "*")
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    public AuthToken login(@RequestBody Account credentials) throws HTTPResponseException {
+
+        AuthToken token;
+        try {
+            // Account account = authenticationService.findById(credentials.getId());
+            Account account = authenticationService.findByName(credentials.getUsername().toLowerCase());
+            token = authenticationService.login(account, credentials);
+            return token;
+        } catch (Exception ex) {
+            log.equals(ex.getMessage());
+        }
+        return null;
+    }
 
 
     @CrossOrigin(origins = "*")
@@ -69,6 +87,5 @@ public class AuthenticationController {
         }
         return account;
     }
-
 
 }

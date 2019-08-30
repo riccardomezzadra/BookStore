@@ -2,16 +2,21 @@ package com.service;
 
 import com.contract.data.IAuthenticationService;
 import com.model.Authentication.Account;
+import com.model.Authentication.AuthToken;
 import com.model.data.AccountDAO;
 import com.model.data.AuthTokenDAO;
 import com.model.data.DataIdRequest;
+import com.model.data.DataValueRequest;
+import com.model.exceptions.HTTPResponseException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class AuthenticationService implements IAuthenticationService {
@@ -47,15 +52,52 @@ public class AuthenticationService implements IAuthenticationService {
         } catch (Exception ex) {
             log.error(ex.getMessage());
         }
-        return new Account();
+        return null;
     }
 
+    public Account findByName(String name) {
+
+        try {
+            DataValueRequest req = new DataValueRequest();
+            req.setFieldName(name);
+            Account account = accountDAO.getElement(req);
+            return account;
+        } catch (Exception ex) {
+            log.error(ex.getMessage());
+        }
+        return null;
+    }
+
+    public AuthToken login(Account account, Account credentials) {
+
+        AuthToken token;
+
+        if (credentials != null) {
+            String passwordToMatch = account.getPassword();
+            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
+            if (passwordToMatch != null && passwordEncoder.matches(credentials.getPassword(), passwordToMatch)) {
+                //token = generateAuthToken(credentials);
+                token = generateAuthToken(account);
+
+            } else {
+                throw new HTTPResponseException("Bad credentials", HttpStatus.UNAUTHORIZED);
+            }
+
+        } else {
+            throw new HTTPResponseException("Bad credentials", HttpStatus.UNAUTHORIZED);
+        }
+        sanitiseAccount(token.getAccount());
+        return token;
+    }
 
     public Account signup(Account account) {
         try {
 
             BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
             account.setPassword(passwordEncoder.encode(account.getPassword()));
+
+            account.setUsername(account.getUsername().toLowerCase());
 
             accountDAO.setElement(account);
             sanitiseAccount(account);
@@ -70,6 +112,12 @@ public class AuthenticationService implements IAuthenticationService {
 
     private void sanitiseAccount(Account account) {
         account.setPassword("*******");
+    }
+
+    private AuthToken generateAuthToken(Account account) {
+        AuthToken token = AuthToken.createInstance(UUID.randomUUID().toString(), account);
+        authTokenDAO.setElement(token);
+        return token;
     }
 
 }

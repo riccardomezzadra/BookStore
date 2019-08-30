@@ -1,6 +1,7 @@
 package com.contract.data;
 
 import com.model.Authentication.Account;
+import com.model.Authentication.AuthToken;
 
 import java.util.List;
 
@@ -9,6 +10,10 @@ public interface IAuthenticationService {
     List<Account> findAll();
 
     Account findById(Long id);
+
+    Account findByName(String name);
+
+    AuthToken login(Account account, Account credentials);
 
     //Account setBook(Account book);
 
