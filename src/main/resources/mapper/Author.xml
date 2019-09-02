@@ -36,5 +36,37 @@
     </select>
     -->
 
+    <select id="selectById" resultMap="AuthorMap">
+        SELECT * From Author WHERE id = #{id};
+    </select>
+
+    <insert id="insert" parameterType="Author" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        INSERT INTO Author
+        (name, surname, photo_url, nationality, birth_place, date_of_birth, date_of_death, gender)
+        VALUES (#{name}, #{surname}, #{photoURL}, #{nationality}, #{birthPlace}, #{dateOfBirth}, #{dateOfDeath},
+        #{gender})
+        <selectKey keyProperty="id" resultType="Long" order="AFTER">
+            SELECT currval('author_id_seq');
+        </selectKey>
+    </insert>
+
+    <update id="update" parameterType="Author">
+        UPDATE Author
+        SET
+        name = #{name},
+        surname = #{surname},
+        photo_url = #{photoURL},
+        nationality = #{nationality},
+        birth_place = #{birthPlace},
+        date_of_birth = #{dateOfBirth},
+        date_of_death = #{dateOfDeath},
+        gender = #{gender}
+        WHERE id = #{id};
+    </update>
+
+    <delete id="delete" parameterType="Long">
+        DELETE from Author WHERE id = #{id};
+    </delete>
+
 </mapper>
 
