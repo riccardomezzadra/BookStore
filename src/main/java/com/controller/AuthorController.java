@@ -27,7 +27,9 @@ public class AuthorController {
 
     @CrossOrigin(origins = "*")
     @RequestMapping(value = "/authors", method = RequestMethod.GET)
-    public List<Author> getAuthorList() {
+    public List<Author> getAuthorList(@RequestHeader("Authorization") String token) {
+
+        log.info("Token Received : " + token);
 
         try {
             List<Author> authorList = authorService.findAll();
